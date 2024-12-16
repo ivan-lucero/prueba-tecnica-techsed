@@ -1,13 +1,13 @@
 import { ProductModel } from "../models";
 
-export const products: ProductModel[] = [
+export const productsData: ProductModel[] = [
   {
     id: 100012,
     title: "Ladrillo hueco 8cm x 18cm x 33cm (Pallet de 198u)",
     description: "Ladrillo hueco 8cm x 18cm x 33cm - Pallet: 198 unidades",
     price: 60588,
     listingPrice: 67320,
-    stock: 5,
+    stock: 3,
     salesUnit: "group",
     measurementUnit: "pallet",
     unitValue: 198,

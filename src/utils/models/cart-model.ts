@@ -1,12 +1,12 @@
 import { ProductModel } from "./product-model";
 
 export interface CartModel {
-  id: string;
-  items: CartItems[];
-  createdAt: Date;
+  id?: string;
+  items: CartItem[];
+  createdAt?: Date;
 }
 
-interface CartItems {
+export interface CartItem {
   product: ProductModel;
   quantity: number;
 }

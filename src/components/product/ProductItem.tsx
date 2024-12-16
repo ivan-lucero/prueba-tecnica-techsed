@@ -1,85 +1,35 @@
-import React from 'react';
-import { products } from '../../data/products.ts';
+import React, { useState } from 'react';
 import usePriceFormat from '../../utils/hooks/usePriceFormat.tsx';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import DoDisturbAltRoundedIcon from '@mui/icons-material/DoDisturbAltRounded';
 import Discount from '../discount/Discount.tsx';
-import { TextField, Button } from '@mui/material';
-import { ProductModel } from '../../models/product-model.ts';
-import { SalesUnitTypes } from '../../types/types.ts';
+import { Button } from '@mui/material';
+import { ProductModel } from '../../utils/models/product-model.ts';
+import useCartStore from '../../store/cart-store.ts';
+import ProductInput from './components/ProductInput.tsx';
 
 interface Props {
   product: ProductModel
 }
 
-const ProductItem = ({ product }: Props) => {
+const ProductItem = (prop: Props) => {
+  const { items } = useCartStore()
+  const cartItem = items.find((item) => item.product.id === prop.product.id)
+  const [product, setProduct] = useState(prop.product)
   const price = usePriceFormat({ amount: product.price });
   const listingPrice = usePriceFormat({ amount: product.listingPrice || 0 });
   const unitPrice = usePriceFormat({
     amount: product.unitValue ? product.price / product.unitValue : 0,
   });
 
-  //TODO: Sepparar en archivo aparte, carpeta inputs
-  const renderInputs = (salesUnit: SalesUnitTypes) => {
-    switch (salesUnit) {
-      case "group":
-        return (
-          <div className='mt-4 flex gap-6'>
-            <div>
-              <p className='font-bold'>Cantidad de unidades</p>
-              <div className='flex items-center gap-2'>
-                <TextField className='w-20' defaultValue={0} type='number' size='small' />
-                <span className='text-base font-bold opacity-50'>Unidades</span>
-              </div>
-            </div>
-            <div>
-              <p className='font-bold'>Cantidad de pallets</p>
-              <div className='flex items-center gap-2'>
-                <Button variant="outlined" color='inherit'>-</Button>
-                <TextField className='w-20' defaultValue={0} size='small' />
-                <Button variant="outlined" color='inherit'>+</Button>
-              </div>
-            </div>
-          </div>
-        )
+  const handleUpdateProduct = () => {
+    //TODO: Refactorizar, Sirve para renderizar ProductItem cuando se cambia cantidad en inputs para mostrar stock disponible
+    setProduct((prev) => ({
+      ...prev,
+      stock: prev.stock, // Incrementar o decrementar stock
+    }));
+  };
 
-      case "area":
-        return (
-          <div className='mt-4 flex gap-6'>
-            <div>
-              <p className='font-bold'>Superficie</p>
-              <div className='flex items-center gap-2'>
-                <TextField className='w-20' defaultValue={0} type='number' size='small' />
-                <span className="text-base font-bold opacity-50">M<sup>2</sup></span>
-              </div>
-            </div>
-            <div>
-              <p className='font-bold'>Cantidad de cajas</p>
-              <div className='flex items-center gap-2'>
-                <Button variant="outlined" color='inherit'>-</Button>
-                <TextField className='w-20' defaultValue={0} size='small' />
-                <Button variant="outlined" color='inherit'>+</Button>
-              </div>
-            </div>
-          </div>
-        )
-
-      case "unit":
-        return (
-          <div className='mt-4 flex gap-6'>
-            <div>
-              <p className='font-bold'>Cantidad</p>
-              <div className='flex items-center gap-2'>
-                <Button variant="outlined" color='inherit'>-</Button>
-                <TextField className='w-20' defaultValue={0} size='small' />
-                <Button variant="outlined" color='inherit'>+</Button>
-                <span className='text-base font-bold opacity-50'>Unidades</span>
-              </div>
-            </div>
-          </div>
-        )
-    }
-  }
   //TODO: Modularizar estilos de tailwind con @apply
   return (
     <article className="grid grid-cols-3 gap-8">
@@ -92,7 +42,7 @@ const ProductItem = ({ product }: Props) => {
         <div className="font-bold uppercase opacity-35">sku: {product.id}</div>
         <div className="text-2xl font-bold">{product.title}</div>
         <div className="text-base font-bold">
-          {product.stock > 0 ? (
+          {product.stock - ((cartItem && cartItem.quantity)|| 0)  >= 1 ? (
             <p className='flex items-center gap-1'>
               <CheckCircleOutlineIcon className="text-green-500" /> Stock disponible
             </p>
@@ -115,9 +65,7 @@ const ProductItem = ({ product }: Props) => {
           <p className="text-xl font-bold line-through opacity-35">{listingPrice}</p>
         }
         <div>
-          {
-            renderInputs(product.salesUnit)
-          }
+          <ProductInput product={product} onUpdateProduct={handleUpdateProduct} cartItem={cartItem || null} />
         </div>
 
         <p className='py-4 font-medium opacity-50'>
