@@ -6,7 +6,7 @@ const Layout = () => {
   return (
     <>
       <Appbar/>
-      <div className='mt-20 px-20'>
+      <div className='mt-20 px-20 pb-40'>
         <Outlet/>
       </div>
     </>

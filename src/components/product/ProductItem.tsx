@@ -7,13 +7,14 @@ import { Button } from '@mui/material';
 import { ProductModel } from '../../utils/models/product-model.ts';
 import useCartStore from '../../store/cart-store.ts';
 import ProductInput from './components/ProductInput.tsx';
+import { Link } from 'react-router';
 
 interface Props {
   product: ProductModel
 }
 
 const ProductItem = (prop: Props) => {
-  const { items } = useCartStore()
+  const { items, removeFromCart } = useCartStore()
   const cartItem = items.find((item) => item.product.id === prop.product.id)
   //TODO: revisar si es necesario useState product
   const [product, setProduct] = useState(prop.product)
@@ -23,7 +24,7 @@ const ProductItem = (prop: Props) => {
     amount: product.unitValue ? product.price / product.unitValue : 0,
   });
 
-  
+
 
   //TODO: Modularizar estilos de tailwind con @apply
   return (
@@ -37,7 +38,7 @@ const ProductItem = (prop: Props) => {
         <div className="font-bold uppercase opacity-35">sku: {product.id}</div>
         <div className="text-2xl font-bold">{product.title}</div>
         <div className="text-base font-bold">
-          {product.stock - ((cartItem && cartItem.quantity)|| 0)  >= 1 ? (
+          {product.stock - ((cartItem && cartItem.quantity) || 0) >= 1 ? (
             <p className='flex items-center gap-1'>
               <CheckCircleOutlineIcon className="text-green-500" /> Stock disponible
             </p>
@@ -67,8 +68,13 @@ const ProductItem = (prop: Props) => {
           {product.description}
         </p>
         <div className='w-1/3 flex flex-col gap-2'>
-          <Button variant='contained' color='primary'>Comprar ahora</Button>
-          <Button variant='outlined' color='primary'>Eliminar del carrito</Button>
+          
+            <Button variant='contained' color='primary'><Link to={"/cart"}>Comprar ahora</Link></Button>
+          {
+            cartItem?.quantity &&
+            <Button variant='outlined' color='primary' onClick={() => removeFromCart(product.id)} >Eliminar del carrito</Button>
+
+          }
         </div>
       </div>
     </article>
