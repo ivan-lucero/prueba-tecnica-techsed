@@ -1,5 +1,7 @@
 import { create } from "zustand";
 import { CartModel, ProductModel } from "../utils/models";
+import { listItemSecondaryActionClasses } from "@mui/material";
+import Swal from "sweetalert2";
 
 export interface CartActions {
   addToCart: (product: ProductModel, quantity: number) => void;
@@ -20,7 +22,10 @@ const useCartStore = create<CartModel & CartActions>((set) => ({
 
       let itemFinded = state.items[findIndex];
       if (product.stock - ((itemFinded && itemFinded.quantity) || 0) <= 0) {
-        alert("No hay mas stock del producto");
+        Swal.fire({
+          title: "No hay mas stock del producto!",
+          icon: "error",
+        });
         return state;
       }
       // Si el producto existe en el carrito le agrega la cantidad, sino agrega el nuevo producto al carrito
@@ -33,7 +38,6 @@ const useCartStore = create<CartModel & CartActions>((set) => ({
       } else {
         newItems.push({ product, quantity });
       }
-      console.log(newItems)
       return { ...state, items: newItems };
     }),
 
@@ -85,18 +89,27 @@ const useCartStore = create<CartModel & CartActions>((set) => ({
             ? { ...item, quantity: item.quantity - (quantity || 0) }
             : item
         );
-        console.log(newItems)
       }
       if (item.quantity - quantity === 0) {
         newItems = state.items!.filter(
           (item) => item.product.id !== productId
         );
-        console.log(newItems)
       }
 
       return {...state, items: newItems};
     }),
 
-  clearCart: () => ({ items: [] }),
+  clearCart: () => set((state) => {
+    return {...state, items: []}
+  }),
+  getTotal: () =>
+    set((state) => {
+      const total = state.items.reduce(
+        (acc, item) => acc + item.quantity * item.product.price,
+        0
+      );
+      console.log("Precio total del carrito:", total);
+      return { ...state, total };
+    }),
 }));
 export default useCartStore;

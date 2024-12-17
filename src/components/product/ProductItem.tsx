@@ -15,6 +15,7 @@ interface Props {
 const ProductItem = (prop: Props) => {
   const { items } = useCartStore()
   const cartItem = items.find((item) => item.product.id === prop.product.id)
+  //TODO: revisar si es necesario useState product
   const [product, setProduct] = useState(prop.product)
   const price = usePriceFormat({ amount: product.price });
   const listingPrice = usePriceFormat({ amount: product.listingPrice || 0 });
@@ -22,13 +23,7 @@ const ProductItem = (prop: Props) => {
     amount: product.unitValue ? product.price / product.unitValue : 0,
   });
 
-  const handleUpdateProduct = () => {
-    //TODO: Refactorizar, Sirve para renderizar ProductItem cuando se cambia cantidad en inputs para mostrar stock disponible
-    setProduct((prev) => ({
-      ...prev,
-      stock: prev.stock, // Incrementar o decrementar stock
-    }));
-  };
+  
 
   //TODO: Modularizar estilos de tailwind con @apply
   return (
@@ -65,7 +60,7 @@ const ProductItem = (prop: Props) => {
           <p className="text-xl font-bold line-through opacity-35">{listingPrice}</p>
         }
         <div>
-          <ProductInput product={product} onUpdateProduct={handleUpdateProduct} cartItem={cartItem || null} />
+          <ProductInput product={product} cartItem={cartItem || null} />
         </div>
 
         <p className='py-4 font-medium opacity-50'>

@@ -14,13 +14,16 @@ const useProductStore = create(
   persist<ProductStore>(
     (set) => ({
       products: [],
-      setProducts: (data) => set({ products: data }),
-      updateProductStock: (id, quantity) => 
+      setProducts: (data) => set((state) => ({ ...state ,products: [...data] })), // Asegura una nueva referencia
+      updateProductStock: (id, quantity) =>
         set((state) => {
-          let productIndexToUpdate = state.products.findIndex(product => product.id === id)
-          state.products[productIndexToUpdate].stock += quantity
-          return state
-        })
+          const updatedProducts = state.products.map((product) =>
+            product.id === id
+              ? { ...product, stock: product.stock + quantity }
+              : product
+          );
+          return { ...state, products: updatedProducts };
+        }),
     }),
     {
       name: "product-store", // Nombre de la clave en localStorage
@@ -28,4 +31,4 @@ const useProductStore = create(
   )
 );
 
-export default useProductStore
+export default useProductStore;

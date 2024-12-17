@@ -1,13 +1,14 @@
-import Appbar from "./components/appbar/Appbar.tsx";
 import "./index.css"
-import ProductList from "./views/ProductList.tsx";
+import { BrowserRouter } from "react-router";
+import AppRoutes from "./routes/AppRoutes.tsx";
 
 function App() {
 
-  return <div className="min-h-screen ">
-    <Appbar/>
-    <ProductList/>
-  </div>;
+  return (
+    <BrowserRouter>
+      <AppRoutes/>
+    </BrowserRouter>
+  );
 }
 
 export default App;

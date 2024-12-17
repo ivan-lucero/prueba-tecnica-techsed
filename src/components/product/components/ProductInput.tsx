@@ -7,10 +7,9 @@ import { CartItem } from '../../../utils/models/cart-model.ts'
 interface Props {
   product: ProductModel
   cartItem: CartItem | null
-  onUpdateProduct: () => void;
 }
 
-const ProductInput = ({ product, onUpdateProduct, cartItem }: Props) => {
+const ProductInput = ({ product, cartItem }: Props) => {
   const { items, addToCart, removeFromCart, updateQuantity } = useCartStore()
 
   //TODO: Cambiar nombres a sufijo State
@@ -24,9 +23,7 @@ const ProductInput = ({ product, onUpdateProduct, cartItem }: Props) => {
       setcartItemValue((prev) => prev + 1)
       if (product && product.unitValue) {
         setQuantityUnitValue(() => (cartItemValue + 1) * product.unitValue!)
-        console.log(quantityUnitValue)
       }
-      onUpdateProduct();
     }
   }
   const buttonRemove = () => {
@@ -36,7 +33,6 @@ const ProductInput = ({ product, onUpdateProduct, cartItem }: Props) => {
       if (product && product.unitValue) {
         setQuantityUnitValue(() => product.unitValue! * (cartItemValue - 1))
       }
-      onUpdateProduct();
     }
   }
 
@@ -63,7 +59,6 @@ const ProductInput = ({ product, onUpdateProduct, cartItem }: Props) => {
     else {
       addToCart(product, autocalculatedQuantity)
     }
-    onUpdateProduct();
   }
 
   switch (product.salesUnit) {
