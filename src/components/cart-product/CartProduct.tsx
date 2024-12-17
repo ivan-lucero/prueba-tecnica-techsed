@@ -23,7 +23,8 @@ const CartProduct = ({ item }: Props) => {
         <div className="text-xl font-bold mt-2">{price}</div>
       </div>
       <div className='col-span-1 flex justify-end items-center'>
-        <IconButton aria-label="delete" color='error' onClick={() => removeFromCart(item.product.id)}>
+        <IconButton aria-label="delete" color='error'
+          onClick={() => removeFromCart(item.product.id)}>
           <DeleteIcon />
         </IconButton>
       </div>

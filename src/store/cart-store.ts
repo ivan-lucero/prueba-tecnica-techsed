@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import { CartModel, ProductModel } from "../utils/models";
-import { listItemSecondaryActionClasses } from "@mui/material";
 import Swal from "sweetalert2";
 
 export interface CartActions {

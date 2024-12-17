@@ -38,7 +38,7 @@ const CartList = () => {
                 )
               })}
             </div>
-            <div className='font-bold'>
+            <div className='font-bold text-2xl text-center py-6'>
               Precio total: {totalPrice}
             </div>
             <div className='flex justify-center'>
