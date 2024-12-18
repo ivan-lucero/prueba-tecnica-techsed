@@ -21,8 +21,10 @@ const Home = () => {
   return (
     <>
       <h1 className='title'>Lista de productos</h1>
-      <Button onClick={reset} variant='contained' color='warning'>Reiniciar productos</Button>
-      <div className='grid gap-10'>
+      <div className='mb-4'>
+        <Button onClick={reset} variant='contained' color='warning'>Reiniciar productos</Button>
+      </div>
+      <div className='grid gap-6'>
         {
           products.map(product => {
             return <ProductItem product={product} key={product.id} />

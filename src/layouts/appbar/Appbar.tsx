@@ -17,13 +17,13 @@ export default function Appbar() {
       <AppBar position="fixed" >
         <Toolbar>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-              <Link to={"/"}>
+            <Link to={"/"}>
               <Button
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 Productos
               </Button>
-              </Link>
+            </Link>
           </Box>
           <MenuItem>
             <Link to={"/cart"}>

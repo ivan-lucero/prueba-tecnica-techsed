@@ -38,7 +38,7 @@ const ProductItem = (prop: Props) => {
   }, [resetInput]);
   //TODO: Modularizar estilos de tailwind con @apply
   return (
-    <article className="grid grid-cols-3 gap-8">
+    <article className="bg-white flex flex-col lg:grid lg:grid-cols-3 gap-8 p-4 border-b-2">
       <div className="col-span-1 ">
         <div className='flex items-center justify-center h-full'>
           <img src={product.img} alt={product.title} />
@@ -77,7 +77,7 @@ const ProductItem = (prop: Props) => {
         <p className='py-4 font-medium opacity-50'>
           {product.description}
         </p>
-        <div className='w-1/3 flex flex-col gap-2'>
+        <div className='w-2/3 md:w-1/3 flex flex-col gap-2'>
 
           <Button variant='contained' color='primary'><Link to={"/cart"}>Comprar ahora</Link></Button>
           {

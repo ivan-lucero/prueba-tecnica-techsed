@@ -5,9 +5,9 @@ import { Outlet } from 'react-router'
 const Layout = () => {
   return (
     <>
-      <Appbar/>
-      <div className='mt-20 px-20 pb-40'>
-        <Outlet/>
+      <Appbar />
+      <div className='bg-slate-100 px-4 md:px-10 lg:px-20 mt-20 pb-40 min-h-screen'>
+        <Outlet />
       </div>
     </>
   )

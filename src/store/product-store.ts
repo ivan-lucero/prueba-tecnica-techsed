@@ -14,7 +14,8 @@ const useProductStore = create(
   persist<ProductStore>(
     (set) => ({
       products: [],
-      setProducts: (data) => set((state) => ({ ...state ,products: [...data] })), // Asegura una nueva referencia
+      setProducts: (data) =>
+        set((state) => ({ ...state, products: [...data] })), // Asegura una nueva referencia
       updateProductStock: (id, quantity) =>
         set((state) => {
           const updatedProducts = state.products.map((product) =>

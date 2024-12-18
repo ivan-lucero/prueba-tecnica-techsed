@@ -2,7 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-
+body {
+  @apply bg-slate-200;
+}
 .title {
-  @apply font-bold text-center text-5xl mb-10
+  @apply font-bold text-center text-3xl md:text-5xl mb-10;
 }

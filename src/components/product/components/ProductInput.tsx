@@ -72,7 +72,7 @@ const ProductInput = ({ product, cartItem, resetInput }: Props) => {
   switch (product.salesUnit) {
     case "group":
       return (
-        <div className='mt-4 flex gap-6'>
+        <div className='mt-4 flex flex-col md:flex-row gap-6'>
           <div>
             <p className='font-bold'>Cantidad de unidades</p>
             <div className='flex items-center gap-2'>
@@ -95,10 +95,10 @@ const ProductInput = ({ product, cartItem, resetInput }: Props) => {
             <div className='flex items-center gap-2'>
               <Button variant="outlined" color='inherit' onClick={buttonRemove} disabled={!(cartItemValue > 0)}>-</Button>
               <TextField className='w-20' size='small' value={cartItemValue} slotProps={{
-                  input: {
-                    name: "cartitem"
-                  },
-                }} />
+                input: {
+                  name: "cartitem"
+                },
+              }} />
               <Button variant="outlined" color='inherit' onClick={buttonAdd} data-testid="add-button" disabled={!(cartItemValue < product.stock)}>+</Button>
             </div>
           </div>
@@ -107,16 +107,16 @@ const ProductInput = ({ product, cartItem, resetInput }: Props) => {
 
     case "area":
       return (
-        <div className='mt-4 flex gap-6'>
+        <div className='mt-4 flex flex-col md:flex-row gap-6'>
           <div>
             <p className='font-bold'>Superficie</p>
             <div className='flex items-center gap-2'>
               <TextField className='w-20' value={quantityUnitValue} type='number' size='small' onChange={changeFieldArea}
-              slotProps={{
-                input: {
-                  name: "quantity",
-                },
-              }} />
+                slotProps={{
+                  input: {
+                    name: "quantity",
+                  },
+                }} />
               <span className="text-base font-bold opacity-50">
                 {product.measurementUnit === "m2" ? <span>M<sup>2</sup></span> : product.measurementUnit === "m" ? "M" : ""}
               </span>
@@ -127,10 +127,10 @@ const ProductInput = ({ product, cartItem, resetInput }: Props) => {
             <div className='flex items-center gap-2'>
               <Button variant="outlined" color='inherit' onClick={buttonRemove} disabled={!(cartItemValue > 0)}>-</Button>
               <TextField className='w-20' size='small' value={cartItemValue} slotProps={{
-                  input: {
-                    name: "cartitem"
-                  },
-                }} />
+                input: {
+                  name: "cartitem"
+                },
+              }} />
               <Button variant="outlined" color='inherit' onClick={buttonAdd} disabled={!(cartItemValue < product.stock)}>+</Button>
             </div>
           </div>
@@ -145,10 +145,10 @@ const ProductInput = ({ product, cartItem, resetInput }: Props) => {
             <div className='flex items-center gap-2'>
               <Button variant="outlined" color='inherit' onClick={buttonRemove} disabled={!(cartItemValue > 0)}>-</Button>
               <TextField className='w-20' size='small' value={cartItemValue} slotProps={{
-                  input: {
-                    name: "cartitem"
-                  },
-                }} />
+                input: {
+                  name: "cartitem"
+                },
+              }} />
               <Button variant="outlined" color='inherit' onClick={buttonAdd} disabled={!(cartItemValue < product.stock)}>+</Button>
               <span className='text-base font-bold opacity-50'>Unidades</span>
             </div>

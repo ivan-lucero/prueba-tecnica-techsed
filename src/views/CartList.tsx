@@ -5,6 +5,8 @@ import { Button } from '@mui/material'
 import useProductStore from '../store/product-store.ts'
 import usePriceFormat from '../utils/hooks/usePriceFormat.tsx'
 import Swal from 'sweetalert2'
+import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
+import { Link } from 'react-router'
 
 const CartList = () => {
   const { items, clearCart } = useCartStore()
@@ -27,7 +29,14 @@ const CartList = () => {
 
   return (
     <div>
-      <h1 className='title'>Carrito de compras</h1>
+      <Button >
+        <Link to={"/"}>
+          <ArrowBackRoundedIcon fontSize='small' /> volver a la lista
+        </Link>
+      </Button>
+      <h1 className='title mt-4'>Carrito de compras</h1>
+      <div className='mt-6'>
+      </div>
       {
         items.length ?
           <div>

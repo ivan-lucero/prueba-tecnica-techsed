@@ -1,11 +1,11 @@
 import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import ProductItem from "./ProductItem";
-import { productsData } from "../../utils/data/products-data";
+import ProductItem from "../components/product/ProductItem";
+import { productsData } from "./data/products-data";
 import { BrowserRouter } from "react-router";
-import { CartItem } from "../../utils/models/cart-model";
-import useCartStore from "../../store/cart-store";
+import { CartItem } from "./models/cart-model";
+import useCartStore from "../store/cart-store";
 
 describe("ProductItem", () => {
   const mockedProduct = productsData[0];

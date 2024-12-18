@@ -33,14 +33,13 @@ const useCartStore = create<CartModel & CartActions>((set) => ({
           ...newItems[findIndex],
           quantity: newItems[findIndex].quantity + quantity,
         };
-        
       } else {
         newItems.push({ product, quantity });
       }
       return { ...state, items: newItems };
     }),
 
-//TODO: Continuar aca. arreglar error de retornar objetos inmubtables. RESPUESTA CHAT GPT
+  //TODO: Continuar aca. arreglar error de retornar objetos inmubtables. RESPUESTA CHAT GPT
   updateQuantity: (productId, quantity) =>
     set((state) => {
       const findIndex = state.items.findIndex(
@@ -55,14 +54,13 @@ const useCartStore = create<CartModel & CartActions>((set) => ({
         console.warn("La cantidad excede el stock disponible.");
         return state;
       }
-      let newItems = [...state.items]
+      let newItems = [...state.items];
       newItems = state.items!.map((item) =>
         item.product.id === productId ? { ...item, quantity } : item
       );
-      return {...state, items: newItems};
+      return { ...state, items: newItems };
     }),
 
-  
   removeFromCart: (productId, quantity) =>
     set((state) => {
       let newItems = [...state.items];
@@ -79,8 +77,8 @@ const useCartStore = create<CartModel & CartActions>((set) => ({
         return state;
       }
       if (!quantity) {
-        newItems = newItems.filter(item => item.product.id !== productId)
-        return {...state, items: newItems};
+        newItems = newItems.filter((item) => item.product.id !== productId);
+        return { ...state, items: newItems };
       }
       if (item.quantity > 0) {
         newItems = state.items.map((item) =>
@@ -90,17 +88,16 @@ const useCartStore = create<CartModel & CartActions>((set) => ({
         );
       }
       if (item.quantity - quantity === 0) {
-        newItems = state.items!.filter(
-          (item) => item.product.id !== productId
-        );
+        newItems = state.items!.filter((item) => item.product.id !== productId);
       }
 
-      return {...state, items: newItems};
+      return { ...state, items: newItems };
     }),
 
-  clearCart: () => set((state) => {
-    return {...state, items: []}
-  }),
+  clearCart: () =>
+    set((state) => {
+      return { ...state, items: [] };
+    }),
   getTotal: () =>
     set((state) => {
       const total = state.items.reduce(
